@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — AI Resume Analyzer</title>
+  <meta name="description" content="Create a free AI Resume Analyzer account to benchmark resumes and get AI career guidance.">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar" role="navigation">
+    <div class="app-container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">AI</div>
+        <span>Resume Analyzer</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="jobs.html" class="nav-link">Jobs</a></li>
+      </ul>
+
+      <div class="nav-user-menu" id="navUserArea"></div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container auth-wrapper">
+      <div class="auth-card">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h2>Create Your Account</h2>
+          <p style="margin-top: 6px; font-size: 0.875rem;">Get started with autonomous resume analysis & job matching.</p>
+        </div>
+
+        <div id="authErrorBox" class="form-error" style="display:none; padding: 10px; background: var(--danger-bg); border-radius: 6px; margin-bottom: 16px;"></div>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <label class="form-label" for="regFullName">Full Name</label>
+            <input type="text" id="regFullName" class="form-input" placeholder="e.g. Abdulrahman Hekal" required autocomplete="name">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Email Address</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="example@gmail.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="regPassword">Password (6+ characters)</label>
+            <input type="password" id="regPassword" class="form-input" placeholder="••••••••" required minlength="6" autocomplete="new-password">
+          </div>
+
+          <button type="submit" id="regSubmitBtn" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+            Create Account
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.875rem; color: var(--ink-secondary);">
+          Already have an account? <a href="login.html" style="font-weight: 600;">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById("registerForm")?.addEventListener("submit", Auth.handleRegister);
+  </script>
+</body>
+</html>

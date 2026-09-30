@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Resume Analyzer — Intelligent Career Platform</title>
+  <meta name="description" content="AI Resume Analyzer leveraging AI Agents and Retrieval-Augmented Generation (RAG) to parse resumes, match jobs transparently, and provide grounded career guidance.">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  
+  <!-- Modern Inter typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="app-container navbar-inner">
+      <a href="index.html" class="brand-logo" id="navBrandLogo">
+        <div class="brand-icon">AI</div>
+        <span>Resume Analyzer</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="resume.html" class="nav-link">My Resumes</a></li>
+        <li><a href="jobs.html" class="nav-link">Job Directory</a></li>
+        <li><a href="career.html" class="nav-link">Career Advisor</a></li>
+      </ul>
+
+      <div class="nav-user-menu" id="navUserArea">
+        <!-- Rendered by auth.js -->
+        <a href="login.html" class="btn btn-outline btn-sm">Log In</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <div class="app-container">
+
+      <!-- Hero Section -->
+      <section class="hero-section" style="margin: -18px 0;">
+        <span class="badge badge-cyan" style="margin-bottom: 16px; font-size: 0.8125rem; padding: 6px 14px;">
+          ✦ ITI Final Project • Building AI Agents
+        </span>
+        <h1 class="hero-title">Next-Generation AI Career Intelligence</h1>
+        <p class="hero-subtitle">
+          Upload resumes in PDF or DOCX format. Our autonomous AI Agents extract structured competencies, 
+          benchmark you against active jobs using a transparent scoring formula, and provide grounded career guidance using RAG.
+        </p>
+
+        <div class="hero-actions">
+          <a href="resume.html" class="btn btn-primary btn-lg" id="heroUploadCta">Upload & Analyze Resume →</a>
+          <a href="jobs.html" class="btn btn-outline btn-lg" id="heroBrowseJobs">Browse Available Jobs</a>
+        </div>
+
+      <!-- Three AI Agents Architecture Showcase -->
+      <section style="margin: 64px 0 0;">
+        <div style="text-align: center; margin-bottom: 32px;">
+          <h2 style="font-size: 1.75rem;">Visibly Implemented AI Agents</h2>
+          <p style="margin: 8px auto; max-width: 60ch;">
+            The application separates deterministic business rules from semantic AI reasoning across three specialized agents.
+          </p>
+        </div>
+
+        <div class="agents-grid">
+          <!-- Agent 1 -->
+          <article class="agent-card">
+            <span class="agent-badge">Agent 1</span>
+            <h3 class="agent-role">Resume Analyzer Agent</h3>
+            <p style="font-size: 0.875rem; margin-bottom: 16px;">
+              Performs structured information extraction from raw resume text into strict Pydantic schemas. 
+              Extracts technical and soft skills, career trajectory, educational background, key strengths, and missing areas.
+            </p>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <span class="badge badge-indigo">Structured Schema</span>
+              <span class="badge badge-indigo">Pydantic Validation</span>
+            </div>
+          </article>
+
+          <!-- Agent 2 -->
+          <article class="agent-card">
+            <span class="agent-badge">Agent 2</span>
+            <h3 class="agent-role">Job Matching Agent</h3>
+            <p style="font-size: 0.875rem; margin-bottom: 16px;">
+              Combines deterministic multi-factor scoring (skills overlap, experience duration, education compatibility) 
+              with semantic embedding vectors. Generates explainable match narratives detailing why each position was recommended.
+            </p>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <span class="badge badge-indigo">Multi-Factor Formula</span>
+              <span class="badge badge-indigo">Gap Analysis</span>
+              <span class="badge badge-indigo">Explainable AI</span>
+            </div>
+          </article>
+
+          <!-- Agent 3 -->
+          <article class="agent-card">
+            <span class="agent-badge">Agent 3</span>
+            <h3 class="agent-role">Career Advisor Agent</h3>
+            <p style="font-size: 0.875rem; margin-bottom: 16px;">
+              Conducts Retrieval-Augmented Generation (RAG) by embedding user queries, retrieving top knowledge base chunks, 
+              and generating actionable 3-phase career progression roadmaps with concrete certification suggestions.
+            </p>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <span class="badge badge-indigo">RAG Pipeline</span>
+              <span class="badge badge-indigo">Vector Retrieval</span>
+              <span class="badge badge-indigo">Source Citations</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="app-container footer-inner">
+      <div>
+        <strong>AI Resume Analyzer</strong> — ITI Training Final Project
+      </div>
+      <div class="footer-badges">
+        <span class="system-tag">Python</span>
+        <span class="system-tag">SQLite</span>
+        <span class="system-tag">FastAPI</span>
+        <span class="system-tag">AI Agents</span>
+        <span class="system-tag">RAG</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

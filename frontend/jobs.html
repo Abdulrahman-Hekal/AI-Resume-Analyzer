@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Directory & Search — AI Resume Analyzer</title>
+  <meta name="description" content="Search, filter, and manage job opportunities to match against resumes.">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar" role="navigation">
+    <div class="app-container navbar-inner">
+      <a href="dashboard.html" class="brand-logo">
+        <div class="brand-icon">AI</div>
+        <span>Resume Analyzer</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="resume.html" class="nav-link">My Resumes</a></li>
+        <li><a href="jobs.html" class="nav-link active">Job Directory</a></li>
+        <li><a href="career.html" class="nav-link">Career Advisor</a></li>
+      </ul>
+
+      <div class="nav-user-menu" id="navUserArea"></div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container">
+
+      <!-- Header & Add Job Action -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; flex-wrap:wrap; gap:16px;">
+        <div>
+          <h1>Active Job Directory</h1>
+          <p>Browse, filter, and benchmark open positions against your analyzed resume.</p>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <span id="jobsCountBadge" class="badge badge-cyan" style="font-size:0.875rem; padding:6px 14px;">Loading Jobs...</span>
+          <button id="openAddJobModalBtn" class="btn btn-primary btn-sm" style="display: none;">+ Post New Job</button>
+        </div>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="card" style="padding: 16px 20px; margin-bottom: 24px;">
+        <div style="display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr auto; gap: 12px; align-items: flex-end;">
+          
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="jobSearchInput">Keyword Search</label>
+            <input type="text" id="jobSearchInput" class="form-input" placeholder="Title, company, or keyword...">
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="jobSkillFilter">Skill Filter</label>
+            <input type="text" id="jobSkillFilter" class="form-input" placeholder="e.g. Python, Docker, AWS">
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="jobExpFilter">Max Experience</label>
+            <select id="jobExpFilter" class="form-select">
+              <option value="">Any Experience</option>
+              <option value="1">≤ 1 Year (Junior)</option>
+              <option value="3">≤ 3 Years (Mid)</option>
+              <option value="5">≤ 5 Years (Senior)</option>
+              <option value="10">≤ 10 Years (Lead)</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="jobTypeFilter">Job Type</label>
+            <select id="jobTypeFilter" class="form-select">
+              <option value="">All Types</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Remote">Remote</option>
+            </select>
+          </div>
+
+          <div>
+            <button id="clearFiltersBtn" class="btn btn-outline" style="height:42px;">Clear</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Jobs Grid -->
+      <section id="jobsListContainer" class="jobs-grid">
+        <div class="skeleton" style="height: 200px; border-radius:12px;"></div>
+        <div class="skeleton" style="height: 200px; border-radius:12px;"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Add Job Modal -->
+  <div class="modal-backdrop" id="jobModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-window">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        <h3 id="modalTitle">Post New Job Opportunity</h3>
+        <button type="button" id="closeJobModalBtn" class="btn btn-outline btn-sm">✕</button>
+      </div>
+
+      <form id="jobForm">
+        <div class="form-group">
+          <label class="form-label" for="modalJobTitle">Job Title *</label>
+          <input type="text" id="modalJobTitle" class="form-input" placeholder="e.g. Senior Backend Engineer" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modalJobCompany">Company Name *</label>
+          <input type="text" id="modalJobCompany" class="form-input" placeholder="e.g. CloudTech Systems" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modalJobDesc">Job Description *</label>
+          <textarea id="modalJobDesc" class="form-textarea" placeholder="Detailed responsibilities, expectations, and domain context..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modalJobSkills">Required Skills (Comma separated) *</label>
+          <input type="text" id="modalJobSkills" class="form-input" placeholder="Python, FastAPI, Docker, PostgreSQL, REST" required>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="modalJobExp">Min Experience (Years)</label>
+            <input type="number" id="modalJobExp" class="form-input" min="0" max="25" step="0.5" value="2.0">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modalJobEdu">Education Level</label>
+            <select id="modalJobEdu" class="form-select">
+              <option value="Bachelor's" selected>Bachelor's</option>
+              <option value="Master's">Master's</option>
+              <option value="Associate">Associate</option>
+              <option value="Any">Any / Self-taught</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="modalJobLocation">Location</label>
+            <input type="text" id="modalJobLocation" class="form-input" value="Remote">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modalJobType">Employment Type</label>
+            <select id="modalJobType" class="form-select">
+              <option value="Full-time" selected>Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Internship">Internship</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modalJobSalary">Salary Range (Optional)</label>
+          <input type="text" id="modalJobSalary" class="form-input" placeholder="e.g. $90,000 - $120,000">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modalJobContactEmail">Contact Email for Applications *</label>
+          <input type="email" id="modalJobContactEmail" class="form-input" placeholder="e.g. hiring@company.com" required>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 24px;">
+          <button type="button" id="fillDemoJobBtn" class="btn btn-outline btn-sm" style="color:var(--accent-cyan); border-color:var(--accent-cyan); display:inline-flex; align-items:center; gap:6px;">
+            Fill Demo Data
+          </button>
+          <div style="display:flex; gap: 12px;">
+            <button type="button" class="btn btn-outline" onclick="Utils.closeModal('jobModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Job Posting</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="app-container footer-inner">
+      <div>AI Resume Analyzer — Job Management & Search Subsystem</div>
+      <div class="footer-badges">
+        <span class="system-tag">RESTful CRUD</span>
+        <span class="system-tag">Multi-criteria Search</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/jobs.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Analysis — AI Resume Analyzer</title>
+  <meta name="description" content="Upload and inspect structured AI resume analyses with verified competencies and job recommendations.">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar" role="navigation">
+    <div class="app-container navbar-inner">
+      <a href="dashboard.html" class="brand-logo">
+        <div class="brand-icon">AI</div>
+        <span>Resume Analyzer</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="resume.html" class="nav-link active">My Resumes</a></li>
+        <li><a href="jobs.html" class="nav-link">Job Directory</a></li>
+        <li><a href="career.html" class="nav-link">Career Advisor</a></li>
+      </ul>
+
+      <div class="nav-user-menu" id="navUserArea"></div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container">
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; flex-wrap:wrap; gap:16px;">
+        <div>
+          <h1>Resume Intelligence & Analysis</h1>
+          <p>Extract structured facts, assess strengths and weaknesses, and discover matched roles.</p>
+        </div>
+      </div>
+
+      <!-- Top Row: Upload Dropzone & Resumes List -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px;">
+        
+        <!-- Drag & Drop Zone -->
+        <div class="drop-zone" id="resumeDropZone">
+          <input type="file" id="resumeFileInput" accept=".pdf,.docx" style="display:none;">
+          <div style="font-size: 2.25rem;">📤</div>
+          <div>
+            <strong style="color:var(--ink-primary); font-size:1rem;">Click to upload or drag & drop</strong>
+            <div style="font-size:0.8125rem; color:var(--ink-muted); margin-top:4px;">Supported Formats: PDF, DOCX (Max: 10MB) &bull; Selectable digital text required (scanned/image-only PDFs require OCR which is not yet supported).</div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); document.getElementById('resumeFileInput').click();">
+            Select File from Computer
+          </button>
+        </div>
+
+        <!-- My Uploaded Resumes List -->
+        <div class="card" style="padding: 16px 20px; display:flex; flex-direction:column; max-height: 240px;">
+          <h4 style="font-size: 0.9375rem; margin-bottom: 12px; color: var(--ink-muted); text-transform: uppercase;">
+            My Uploaded Resumes
+          </h4>
+          <div id="resumesList" style="flex:1; overflow-y: auto;">
+            <div class="skeleton" style="height: 60px; border-radius: 8px;"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Main Structured Analysis Display Container -->
+      <section id="analysisContainer" style="display:none;">
+        
+        <!-- Candidate Profile Header -->
+        <div class="candidate-header">
+          <div>
+            <h2 id="candidateName" style="font-size: 1.5rem; margin-bottom: 4px;">Candidate Name</h2>
+            <div id="candidateContact" style="font-size: 0.875rem; color: var(--ink-secondary);"></div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+            <span id="analysisProviderBadge" class="badge badge-cyan">AI Provider</span>
+            <span class="badge" style="background:var(--surface-3); font-size:0.75rem;">Verified Structured Facts</span>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-nav" aria-label="Analysis Sections">
+          <button class="tab-btn active" data-tab="tabOverview">1. Overview & Summary</button>
+          <button class="tab-btn" data-tab="tabSkills">2. Skills Matrix</button>
+          <button class="tab-btn" data-tab="tabExperience">3. Experience & Education</button>
+          <button class="tab-btn" data-tab="tabInsights">4. Strengths & Weaknesses</button>
+          <button class="tab-btn" data-tab="tabRecommendations">5. Job Recommendations</button>
+        </nav>
+
+        <!-- Tab 1: Overview -->
+        <div class="tab-pane active" id="tabOverview">
+          <div class="skeleton" style="height: 140px; border-radius:12px;"></div>
+        </div>
+
+        <!-- Tab 2: Skills -->
+        <div class="tab-pane" id="tabSkills">
+          <div class="skeleton" style="height: 140px; border-radius:12px;"></div>
+        </div>
+
+        <!-- Tab 3: Experience & Education -->
+        <div class="tab-pane" id="tabExperience">
+          <div class="skeleton" style="height: 140px; border-radius:12px;"></div>
+        </div>
+
+        <!-- Tab 4: Insights -->
+        <div class="tab-pane" id="tabInsights">
+          <div class="skeleton" style="height: 140px; border-radius:12px;"></div>
+        </div>
+
+        <!-- Tab 5: Recommendations -->
+        <div class="tab-pane" id="tabRecommendations">
+          <div class="skeleton" style="height: 140px; border-radius:12px;"></div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="app-container footer-inner">
+      <div>AI Resume Analyzer — Agentic Information Extraction System</div>
+      <div class="footer-badges">
+        <span class="system-tag">Resume Analyzer Agent</span>
+        <span class="system-tag">Pydantic Schemas</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/resumes.js"></script>
+</body>
+</html>

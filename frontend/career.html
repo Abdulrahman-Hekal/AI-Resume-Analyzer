@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Advisor (RAG) — AI Resume Analyzer</title>
+  <meta name="description" content="AI Career Advisor Agent powered by Retrieval-Augmented Generation (RAG) knowledge base.">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar" role="navigation">
+    <div class="app-container navbar-inner">
+      <a href="dashboard.html" class="brand-logo">
+        <div class="brand-icon">AI</div>
+        <span>Resume Analyzer</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="resume.html" class="nav-link">My Resumes</a></li>
+        <li><a href="jobs.html" class="nav-link">Job Directory</a></li>
+        <li><a href="career.html" class="nav-link active">Career Advisor</a></li>
+      </ul>
+
+      <div class="nav-user-menu" id="navUserArea"></div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container">
+
+      <!-- Header -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; flex-wrap:wrap; gap:16px;">
+        <div>
+          <h1>AI Career Advisor & RAG System</h1>
+          <p>Ask career questions grounded in verified engineering guidelines, skill profiles, and career roadmaps.</p>
+        </div>
+        <div class="footer-badges">
+          <span class="system-tag online">● RAG Retrieval Active</span>
+          <span class="system-tag">Agent 3: Career Advisor</span>
+        </div>
+      </div>
+
+      <!-- 2-Column Split: Chat Interface vs Knowledge Base Reference -->
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; align-items: flex-start;">
+        
+        <!-- Left: Interactive Advisor Chat -->
+        <div>
+          <!-- Quick Prompt Chips -->
+          <div style="margin-bottom: 12px;">
+            <div style="font-size:0.75rem; text-transform:uppercase; color:var(--ink-muted); font-weight:600; margin-bottom:6px;">Suggested Prompts for Evaluation:</div>
+            <div class="prompt-chips">
+              <button type="button" class="chip-btn">How do I optimize my resume bullets using the Google XYZ formula?</button>
+              <button type="button" class="chip-btn">What is the roadmap to transition from Junior to Senior Backend Engineer?</button>
+              <button type="button" class="chip-btn">Which cloud certifications offer the highest industry ROI?</button>
+              <button type="button" class="chip-btn">How do I design a clean REST API in FastAPI?</button>
+            </div>
+          </div>
+
+          <!-- Chat Box -->
+          <div class="chat-container">
+            <div class="chat-messages" id="careerChatMessages">
+              <!-- Welcome Bubble -->
+              <div class="chat-bubble advisor">
+                <p>Hello! I am your <strong>AI Career Advisor Agent (Agent 3)</strong>. I provide structured career roadmaps and answer your questions by retrieving verified context from our <strong>RAG Knowledge Base</strong>.</p>
+                <div style="margin-top:8px; font-size:0.8125rem; color:var(--ink-secondary);">
+                  💡 Feel free to ask about resume ATS optimization, technical skill progression, or how to qualify for a specific role!
+                </div>
+              </div>
+            </div>
+
+            <!-- Input Bar -->
+            <form id="careerChatForm" class="chat-input-bar">
+              <input type="text" id="careerQuestionInput" class="form-input" placeholder="Ask a career or technical preparation question..." required autocomplete="off">
+              <button type="submit" id="careerSendBtn" class="btn btn-primary" style="white-space:nowrap;">
+                Ask Advisor
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right: Grounding Knowledge Base Inspector -->
+        <aside>
+          <div class="card">
+            <div class="card-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div>
+                <h3 class="card-title">RAG Knowledge Base</h3>
+                <div class="card-description">Indexed documents powering vector cosine similarity retrieval.</div>
+              </div>
+              <button id="openAddKnowledgeDocBtn" class="btn btn-primary btn-sm" style="display:none; white-space:nowrap;">+ Add Doc</button>
+            </div>
+
+            <div style="font-size:0.8125rem; color:var(--ink-muted); margin-bottom:12px;">
+              The RAG pipeline retrieves relevant chunks from these curated documents before generating advice:
+            </div>
+
+            <div id="knowledgeBaseList" style="display:flex; flex-direction:column; gap:8px; max-height: 440px; overflow-y:auto;">
+              <div class="skeleton" style="height: 60px; border-radius:6px;"></div>
+              <div class="skeleton" style="height: 60px; border-radius:6px;"></div>
+            </div>
+
+            <div style="margin-top:16px; padding-top:12px; border-top:1px solid var(--border-subtle); font-size:0.75rem; color:var(--ink-muted);">
+              <strong>Pipeline:</strong> Query → Dense Embedding → Cosine Ranking → Augmented Context → Grounded Response.
+            </div>
+          </div>
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add Knowledge Document Modal -->
+  <div class="modal-backdrop" id="knowledgeDocModal" role="dialog" aria-modal="true" aria-labelledby="knowledgeDocModalTitle">
+    <div class="modal-window">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        <h3 id="knowledgeDocModalTitle">Add Knowledge Base Document</h3>
+        <button type="button" id="closeKnowledgeDocModalBtn" class="btn btn-outline btn-sm">✕</button>
+      </div>
+
+      <form id="knowledgeDocForm">
+        <div class="form-group">
+          <label class="form-label" for="modalKnowledgeTitle">Document Title *</label>
+          <input type="text" id="modalKnowledgeTitle" class="form-input" placeholder="e.g. Advanced Python Async Patterns" required minlength="3">
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="modalKnowledgeCategory">Category *</label>
+            <select id="modalKnowledgeCategory" class="form-select" required>
+              <option value="resume_guideline">Resume Guideline</option>
+              <option value="career_roadmap">Career Roadmap</option>
+              <option value="skill_description">Skill Description</option>
+              <option value="learning_resource">Learning Resource</option>
+              <option value="job_description">Job Description</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="modalKnowledgeSource">Source</label>
+            <input type="text" id="modalKnowledgeSource" class="form-input" placeholder="e.g. Industry Standards" value="user_contributed">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modalKnowledgeContent">Document Content *</label>
+          <textarea id="modalKnowledgeContent" class="form-textarea" rows="8" placeholder="Paste or type the full document content here. This will be chunked and embedded for vector retrieval..." required minlength="20"></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn btn-outline" onclick="Utils.closeModal('knowledgeDocModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Ingest & Index Document</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="app-container footer-inner">
+      <div>AI Resume Analyzer — Grounded Retrieval-Augmented Generation</div>
+      <div class="footer-badges">
+        <span class="system-tag">Career Advisor Agent</span>
+        <span class="system-tag">RAG Vector Cosine Similarity</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/career.js"></script>
+</body>
+</html>
+

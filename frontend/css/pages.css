@@ -1,0 +1,415 @@
+/* ==============================================================================
+   Page-Specific Layouts & Visual Styling
+============================================================================== */
+
+/* Landing Page Hero */
+.hero-section {
+  padding: var(--space-8) 0 var(--space-6);
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-3);
+  color: var(--ink-primary);
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  color: var(--ink-secondary);
+  max-width: 65ch;
+  margin: 0 auto var(--space-6);
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+/* Three Agents Grid Showcase */
+.agents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-6) 0;
+}
+
+.agent-card {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.agent-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+}
+
+.agent-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: var(--space-2);
+}
+
+.agent-role {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  margin-bottom: var(--space-2);
+}
+
+/* Auth Cards */
+.auth-wrapper {
+  min-height: calc(100vh - 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5) 0;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+}
+
+.demo-account-box {
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-top: var(--space-4);
+  font-size: 0.8125rem;
+}
+
+/* Dashboard Metric Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.metric-card {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+.metric-label {
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--ink-primary);
+  margin: var(--space-1) 0;
+}
+
+/* Resume Detail & Analysis View */
+.candidate-header {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.skills-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--surface-3);
+  margin: var(--space-3) 0;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-4) - 5px);
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+}
+
+.timeline-title {
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.timeline-meta {
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-1);
+}
+
+/* Strengths & Weaknesses Grid */
+.insights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+}
+
+@media (max-width: 768px) {
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.insight-card {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.insight-card.strengths {
+  border-top: 3px solid var(--success);
+}
+
+.insight-card.weaknesses {
+  border-top: 3px solid var(--warning);
+}
+
+.bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.bullet-list li {
+  font-size: 0.875rem;
+  color: var(--ink-secondary);
+  position: relative;
+  padding-left: var(--space-4);
+  line-height: 1.4;
+}
+
+.bullet-list.strengths li::before {
+  content: "✓";
+  color: var(--success);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.bullet-list.weaknesses li::before {
+  content: "⚠";
+  color: var(--warning);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Job Cards Grid */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: var(--space-4);
+  margin: var(--space-5) 0;
+}
+
+.job-card {
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.job-card:hover {
+  border-color: var(--border-focus);
+}
+
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.job-meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  flex-wrap: wrap;
+}
+
+/* Score Breakdown Component */
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin: var(--space-4) 0;
+}
+
+.breakdown-item {
+  text-align: center;
+}
+
+.breakdown-title {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+
+.breakdown-score {
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-top: 2px;
+}
+
+/* Career Advisor Chat & RAG Citations */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  background-color: var(--surface-1);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: var(--space-5);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background-color: var(--accent-primary);
+  color: white;
+  border-bottom-right-radius: 2px;
+}
+
+.chat-bubble.advisor {
+  align-self: flex-start;
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-default);
+  color: var(--ink-primary);
+  border-bottom-left-radius: 2px;
+}
+
+.chat-bubble p {
+  color: inherit;
+}
+
+.chat-input-bar {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--surface-2);
+  border-top: 1px solid var(--border-default);
+}
+
+/* RAG Grounding Citation Box */
+.rag-citation-box {
+  margin-top: var(--space-3);
+  background-color: var(--surface-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.8125rem;
+}
+
+.rag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+}
+
+.prompt-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.chip-btn {
+  background-color: var(--surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-size: 0.8125rem;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.chip-btn:hover {
+  background-color: var(--surface-3);
+  color: var(--ink-primary);
+  border-color: var(--border-focus);
+}

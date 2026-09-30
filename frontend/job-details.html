@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Match Details — AI Resume Analyzer</title>
+  <meta name="description" content="Deep dive job details with live multi-factor match score and skill breakdown.">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar" role="navigation">
+    <div class="app-container navbar-inner">
+      <a href="dashboard.html" class="brand-logo">
+        <div class="brand-icon">AI</div>
+        <span>Resume Analyzer</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="resume.html" class="nav-link">My Resumes</a></li>
+        <li><a href="jobs.html" class="nav-link active">Job Directory</a></li>
+        <li><a href="career.html" class="nav-link">Career Advisor</a></li>
+      </ul>
+
+      <div class="nav-user-menu" id="navUserArea"></div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container">
+
+      <!-- Breadcrumbs -->
+      <div style="font-size:0.875rem; margin-bottom:20px; color:var(--ink-muted);">
+        <a href="jobs.html">Job Directory</a> / <span id="breadcrumbJobTitle" style="color:var(--ink-primary);">Job Details</span>
+      </div>
+
+      <!-- 2-Column Split: Job Information vs Live Match Panel -->
+      <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; align-items: flex-start;">
+        
+        <!-- Left: Full Job Details Card -->
+        <article class="card" id="jobDetailCard">
+          <div class="skeleton" style="height: 320px; border-radius:12px;"></div>
+        </article>
+
+        <!-- Right: Live Match Evaluation & Scoring Formula -->
+        <aside id="jobMatchPanel">
+          <div class="skeleton" style="height: 280px; border-radius:12px;"></div>
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Edit Job Modal -->
+  <div class="modal-backdrop" id="editJobModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-window">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        <h3 id="editModalTitle">Edit Job Posting</h3>
+        <button type="button" id="closeEditJobModalBtn" class="btn btn-outline btn-sm">✕</button>
+      </div>
+
+      <form id="editJobForm">
+        <div class="form-group">
+          <label class="form-label" for="editJobTitle">Job Title *</label>
+          <input type="text" id="editJobTitle" class="form-input" placeholder="e.g. Senior Backend Engineer" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editJobCompany">Company Name *</label>
+          <input type="text" id="editJobCompany" class="form-input" placeholder="e.g. CloudTech Systems" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editJobDesc">Job Description *</label>
+          <textarea id="editJobDesc" class="form-textarea" placeholder="Detailed responsibilities, expectations, and domain context..." rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editJobSkills">Required Skills (Comma separated) *</label>
+          <input type="text" id="editJobSkills" class="form-input" placeholder="Python, FastAPI, Docker, PostgreSQL" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editJobPrefSkills">Preferred / Nice-to-Have Skills (Comma separated)</label>
+          <input type="text" id="editJobPrefSkills" class="form-input" placeholder="e.g. Kubernetes, GraphQL, AWS">
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="editJobExp">Min Experience (Years)</label>
+            <input type="number" id="editJobExp" class="form-input" min="0" max="50" step="0.5" value="2.0">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editJobEdu">Education Level</label>
+            <select id="editJobEdu" class="form-select">
+              <option value="Bachelor's">Bachelor's</option>
+              <option value="Master's">Master's</option>
+              <option value="Associate">Associate</option>
+              <option value="Any">Any / Self-taught</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="editJobLocation">Location</label>
+            <input type="text" id="editJobLocation" class="form-input" value="Remote">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editJobType">Employment Type</label>
+            <select id="editJobType" class="form-select">
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Internship">Internship</option>
+              <option value="Remote">Remote</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editJobSalary">Salary Range (Optional)</label>
+          <input type="text" id="editJobSalary" class="form-input" placeholder="e.g. $90,000 - $120,000">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editJobContactEmail">Contact Email for Applications</label>
+          <input type="email" id="editJobContactEmail" class="form-input" placeholder="e.g. hiring@company.com">
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn btn-outline" id="cancelEditJobBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveEditJobBtn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="app-container footer-inner">
+      <div>AI Resume Analyzer — Transparent Multi-Dimensional Matching Engine</div>
+      <div class="footer-badges">
+        <span class="system-tag">Job Matcher Agent</span>
+        <span class="system-tag">Formula: 40% Skills + 25% Exp + 15% Edu + 20% Semantic</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/job-details.js"></script>
+</body>
+</html>
